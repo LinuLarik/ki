@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+var BagItems = [];
+var bagsize = 25;
+
+	function DefaultItems()
+{
+	//alert('DefaultItems');
+	BagItems = [];
+	var temp = {name:"Часы",weight:10,cost:175};
+	BagItems.push(temp);
+	var temp = {name:"Картина",weight:9,cost:90};
+	BagItems.push(temp);
+	var temp = {name:"Радио",weight:4,cost:20};
+	BagItems.push(temp);
+	var temp = {name:"Ваза",weight:2,cost:50};
+	BagItems.push(temp);
+	var temp = {name:"Книга",weight:1,cost:10};
+	BagItems.push(temp);
+	var temp = {name:"Компьютер",weight:20,cost:200};
+	BagItems.push(temp);
+	return BagItems;
+}
+function byField(field) {
+  return (a, b) => a[field] < b[field] ? 1 : -1;
+}
+    function Calc(){
+var BagItems= DefaultItems(BagItems);
+var BagCalcInfo = [];
+var co = BagItems.length;
+//console.log(BagItems);
+//Жадный алгоритм
+	//определяем отношение стоимость\вес для каждого элемента
+	for (var i=0;i<co;i++)
+	{
+		var temp = {};
+		temp.id = i;
+		temp.bonus = BagItems[i].cost/BagItems[i].weight;
+		temp.count = 0;
+		BagCalcInfo.push(temp);
+	}
+	//Сортировка массива
+	BagCalcInfo.sort(byField('bonus'));
+	var tempsize = bagsize;
+	for (var i=0;i<co;i++)
+	{
+		BagCalcInfo[i].count = Math.floor(tempsize/BagItems[BagCalcInfo[i].id].weight);
+		tempsize=tempsize-BagCalcInfo[i].count*BagItems[BagCalcInfo[i].id].weight;
+	}
+	var res=0;
+	for (var i=0;i<co;i++)
+	{
+		res+= BagCalcInfo[i].count * BagItems[BagCalcInfo[i].id].cost;
+
+	}
+	var URA ="Цена "+res+" ";
+	alert(URA);
+    
+		}
+		Calc();
+	</script>
+
+</body>
+</html>
+
